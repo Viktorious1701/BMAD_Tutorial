@@ -36,7 +36,7 @@ function AccountCard({ account }: { account: Account }) {
       <CardContent className="pt-4">
         <div className="flex justify-between items-center">
           <span className="text-sm font-medium" style={{color: 'var(--deep-current)'}}>Số dư ban đầu:</span>
-          <span className="text-xl font-bold sunset-gradient bg-clip-text text-transparent">
+          <span className="text-xl font-bold text-green-600 drop-shadow-sm">
             {formatCurrency(account.startingBalance)}
           </span>
         </div>

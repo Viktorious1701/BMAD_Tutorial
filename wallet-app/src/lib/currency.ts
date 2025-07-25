@@ -3,12 +3,12 @@
  */
 
 export function formatVND(amount: number): string {
-  return new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND',
+  // Use a more reliable formatting approach that works across all systems
+  const formatted = amount.toLocaleString('en-US', {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(amount);
+  });
+  return `${formatted} ₫`;
 }
 
 export function formatVNDCompact(amount: number): string {
@@ -19,7 +19,7 @@ export function formatVNDCompact(amount: number): string {
   } else if (amount >= 1000) {
     return `${(amount / 1000).toFixed(1)}K ₫`;
   }
-  return `${amount.toLocaleString('vi-VN')} ₫`;
+  return `${amount.toLocaleString('en-US')} ₫`;
 }
 
 export function parseVNDInput(input: string): number {

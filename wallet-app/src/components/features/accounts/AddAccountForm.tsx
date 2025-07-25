@@ -121,7 +121,7 @@ export function AddAccountForm() {
               <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm font-medium" style={{color: 'var(--ocean-medium)'}}>₫</span>
             </div>
             {displayBalance && (
-              <p className="text-sm font-medium" style={{color: 'var(--wave-crest)'}}>
+              <p className="text-sm font-bold text-green-600 drop-shadow-sm">
                 Hiển thị: {displayBalance}
               </p>
             )}
