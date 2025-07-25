@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+/* Tidal Wave Color Theme - Inspired by Geometry Dash Tidal Wave level */
+:root {
+  /* Beach/Ocean Colors */
+  --ocean-deep: #0B4D6B;
+  --ocean-medium: #1E6B8C;
+  --ocean-light: #4A90B8;
+  --wave-foam: #87CEEB;
+  --beach-sand: #F4E4BC;
+  --beach-light: #FFF8DC;
+  
+  /* Sunset Colors */
+  --sunset-orange: #FF6B35;
+  --sunset-coral: #FF8C69;
+  --sunset-peach: #FFAB91;
+  --sunset-gold: #FFD700;
+  
+  /* Accent Colors */
+  --wave-crest: #00CED1;
+  --deep-current: #2F4F4F;
+  --shore-mist: #F0F8FF;
+  
+  /* Theme Variables */
+  --background: linear-gradient(135deg, var(--shore-mist) 0%, var(--wave-foam) 50%, var(--ocean-light) 100%);
+  --foreground: var(--deep-current);
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --border-color: var(--wave-foam);
+  --accent-primary: var(--ocean-medium);
+  --accent-secondary: var(--sunset-orange);
+  --success-color: var(--wave-crest);
+  --warning-color: var(--sunset-gold);
+}
+
+@theme inline {
+  --color-background: var(--shore-mist);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark mode - Deep ocean theme */
+    --background: linear-gradient(135deg, var(--ocean-deep) 0%, var(--deep-current) 50%, #1a1a2e 100%);
+    --foreground: var(--shore-mist);
+    --card-bg: rgba(11, 77, 107, 0.8);
+    --border-color: var(--ocean-light);
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+}
+
+/* Tidal Wave Animation Effects */
+@keyframes wave-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+@keyframes ocean-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.wave-animation {
+  animation: wave-pulse 3s ease-in-out infinite;
+}
+
+.ocean-gradient {
+  background: linear-gradient(-45deg, var(--ocean-deep), var(--ocean-medium), var(--ocean-light), var(--wave-foam));
+  background-size: 400% 400%;
+  animation: ocean-flow 8s ease infinite;
+}
+
+.sunset-gradient {
+  background: linear-gradient(-45deg, var(--sunset-orange), var(--sunset-coral), var(--sunset-peach), var(--sunset-gold));
+  background-size: 400% 400%;
+  animation: ocean-flow 6s ease infinite;
+}
+
+/* Custom scrollbar with wave theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--shore-mist);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ocean-light);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ocean-medium);
+}
