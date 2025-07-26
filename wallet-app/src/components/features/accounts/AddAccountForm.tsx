@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAccountStore } from '@/store/accountStore';
-import { Plus, Waves } from 'lucide-react';
-import { formatVND, convertVNDToUSD, parseVNDInput } from '@/lib/currency';
+import { Plus, Waves, Anchor } from 'lucide-react';
+import { formatVND, parseVNDInput } from '@/lib/currency';
+import { WaveRipple } from '@/components/ui/particle-effects';
 
 export function AddAccountForm() {
   const [name, setName] = useState('');
@@ -48,11 +48,10 @@ export function AddAccountForm() {
     
     try {
       const vndBalance = parseVNDInput(startingBalance);
-      const usdBalance = convertVNDToUSD(vndBalance);
       
       await createAccount({
         name: name.trim(),
-        startingBalance: usdBalance, // Store as USD in database
+        startingBalance: vndBalance, // Store as VND directly in database
       });
       
       // Reset form on success
@@ -80,71 +79,111 @@ export function AddAccountForm() {
   };
 
   return (
-    <Card className="w-full max-w-md bg-white/90 backdrop-blur-sm border-2 border-blue-200/50 shadow-lg">
-      <CardHeader className="ocean-gradient text-white rounded-t-lg">
-        <CardTitle className="flex items-center gap-2 font-bold">
-          <Waves className="h-5 w-5 text-white wave-animation" />
-          Thêm Tài Khoản Mới
-        </CardTitle>
-        <CardDescription className="text-blue-100">
-          Tạo tài khoản tài chính mới để theo dõi tiền của bạn.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="pt-6">
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="space-y-2">
-            <Label htmlFor="name" className="font-semibold" style={{color: 'var(--deep-current)'}}>Tên Tài Khoản</Label>
-            <Input
-              id="name"
-              type="text"
-              placeholder="VD: Tài khoản tiết kiệm"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className={`transition-all duration-200 ${errors.name ? 'border-red-400 focus:border-red-500' : 'border-blue-200 focus:border-blue-400'} bg-white/80`}
-            />
+    <div className="organic-card p-8 relative overflow-hidden">
+      <div className="absolute inset-0 geometric-waves opacity-5"></div>
+      <div className="relative z-10">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="ocean-gradient p-3 rounded-full">
+              <Waves className="h-6 w-6 text-white floating" />
+            </div>
+            <div className="sunset-gradient p-3 rounded-full">
+              <Anchor className="h-6 w-6 text-white" />
+            </div>
+          </div>
+          <h3 className="text-2xl font-bold mb-2" style={{color: 'var(--deep-current)'}}>
+            Tạo Dòng Chảy Mới
+          </h3>
+          <p className="text-lg" style={{color: 'var(--ocean-medium)'}}>
+            Khởi tạo một dòng chảy tài chính mới trong đại dương của bạn
+          </p>
+        </div>
+        
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-3">
+            <Label htmlFor="name" className="text-lg font-semibold" style={{color: 'var(--deep-current)'}}>
+              Tên Dòng Chảy
+            </Label>
+            <WaveRipple>
+              <Input
+                id="name"
+                type="text"
+                placeholder="VD: Dòng chảy tiết kiệm, Kho báu khẩn cấp"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className={`transition-all duration-300 text-lg p-4 rounded-xl ${errors.name ? 'border-red-400 focus:border-red-500' : 'border-blue-200 focus:border-blue-400'} bg-white/80 backdrop-blur-sm`}
+              />
+            </WaveRipple>
             {errors.name && (
-              <p className="text-sm font-medium" style={{color: 'var(--sunset-orange)'}}>{errors.name}</p>
+              <p className="text-sm font-medium flex items-center gap-2" style={{color: 'var(--sunset-orange)'}}>
+                🌊 {errors.name}
+              </p>
             )}
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="startingBalance" className="font-semibold" style={{color: 'var(--deep-current)'}}>Số Dư Ban Đầu (VND)</Label>
-            <div className="relative">
-              <Input
-                id="startingBalance"
-                type="text"
-                placeholder="0"
-                value={startingBalance}
-                onChange={handleBalanceChange}
-                className={`transition-all duration-200 ${errors.startingBalance ? 'border-red-400 focus:border-red-500' : 'border-blue-200 focus:border-blue-400'} bg-white/80 pr-12`}
-              />
-              <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm font-medium" style={{color: 'var(--ocean-medium)'}}>₫</span>
-            </div>
+          <div className="space-y-3">
+            <Label htmlFor="startingBalance" className="text-lg font-semibold" style={{color: 'var(--deep-current)'}}>
+              Giá Trị Khởi Đầu (VND)
+            </Label>
+            <WaveRipple>
+              <div className="relative">
+                <Input
+                  id="startingBalance"
+                  type="text"
+                  placeholder="0"
+                  value={startingBalance}
+                  onChange={handleBalanceChange}
+                  className={`transition-all duration-300 text-lg p-4 pr-16 rounded-xl ${errors.startingBalance ? 'border-red-400 focus:border-red-500' : 'border-blue-200 focus:border-blue-400'} bg-white/80 backdrop-blur-sm`}
+                />
+                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-lg font-bold" style={{color: 'var(--ocean-medium)'}}>
+                  ₫
+                </span>
+              </div>
+            </WaveRipple>
             {displayBalance && (
-              <p className="text-sm font-bold text-green-600 drop-shadow-sm">
-                Hiển thị: {displayBalance}
-              </p>
+              <div className="p-3 rounded-lg" style={{backgroundColor: 'var(--wave-crest)', color: 'var(--deep-current)'}}>
+                <p className="text-sm font-bold flex items-center gap-2">
+                  💰 Hiển thị: {displayBalance}
+                </p>
+              </div>
             )}
             {errors.startingBalance && (
-              <p className="text-sm font-medium" style={{color: 'var(--sunset-orange)'}}>{errors.startingBalance}</p>
+              <p className="text-sm font-medium flex items-center gap-2" style={{color: 'var(--sunset-orange)'}}>
+                🌊 {errors.startingBalance}
+              </p>
             )}
           </div>
           
           {error && (
-            <div className="p-3 text-sm font-medium rounded-md" style={{color: 'var(--sunset-orange)', backgroundColor: 'var(--beach-light)', border: '1px solid var(--sunset-coral)'}}>
-              {error}
+            <div className="p-4 rounded-xl" style={{color: 'var(--sunset-orange)', backgroundColor: 'var(--beach-light)', border: '2px solid var(--sunset-coral)'}}>
+              <p className="text-sm font-medium flex items-center gap-2">
+                ⚠️ {error}
+              </p>
             </div>
           )}
           
-          <Button 
-            type="submit" 
-            disabled={isLoading} 
-            className="w-full font-semibold py-3 transition-all duration-300 hover:scale-105 sunset-gradient text-white border-0 shadow-lg hover:shadow-xl"
-          >
-            {isLoading ? 'Đang tạo...' : 'Tạo Tài Khoản'}
-          </Button>
+          <WaveRipple>
+            <Button 
+              type="submit" 
+              disabled={isLoading} 
+              className="w-full text-lg font-bold py-4 rounded-xl transition-all duration-300 hover:scale-105 wave-button border-0 shadow-lg hover:shadow-xl"
+            >
+              {isLoading ? (
+                <span className="flex items-center gap-2">
+                  <Waves className="h-5 w-5 floating" />
+                  Đang tạo dòng chảy...
+                </span>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <Plus className="h-5 w-5" />
+                  Tạo Dòng Chảy Mới
+                </span>
+              )}
+            </Button>
+          </WaveRipple>
         </form>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

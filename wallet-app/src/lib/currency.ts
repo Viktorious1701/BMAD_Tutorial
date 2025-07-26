@@ -31,10 +31,17 @@ export function parseVNDInput(input: string): number {
 
 // Convert USD to VND (approximate rate: 1 USD = 24,000 VND)
 export function convertUSDToVND(usdAmount: number): number {
+  // Use precise calculation and round to avoid floating-point errors
   return Math.round(usdAmount * 24000);
 }
 
 // Convert VND to USD
 export function convertVNDToUSD(vndAmount: number): number {
-  return vndAmount / 24000;
+  // Use precise calculation to avoid floating-point errors
+  return Math.round((vndAmount / 24000) * 100000000) / 100000000;
+}
+
+// Generic currency formatter (alias for formatVND for consistency)
+export function formatCurrency(amount: number): string {
+  return formatVND(amount);
 }

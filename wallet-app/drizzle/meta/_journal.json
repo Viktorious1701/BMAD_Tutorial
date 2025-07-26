@@ -8,6 +8,13 @@
       "when": 1753450932938,
       "tag": "0000_graceful_ben_grimm",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1753523656918,
+      "tag": "0001_fantastic_scarlet_witch",
+      "breakpoints": true
     }
   ]
 }

@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
-/* Tidal Wave Color Theme - Inspired by Geometry Dash Tidal Wave level */
+/* Ocean Wave Theme - Flowing Beach-Inspired Design */
 :root {
-  /* Beach/Ocean Colors */
+  /* Beach/Ocean Colors - Enhanced for better text contrast */
   --ocean-deep: #0B4D6B;
-  --ocean-medium: #1E6B8C;
+  --ocean-medium: #1A5F7A;
   --ocean-light: #4A90B8;
   --wave-foam: #87CEEB;
   --beach-sand: #F4E4BC;
@@ -16,15 +16,20 @@
   --sunset-peach: #FFAB91;
   --sunset-gold: #FFD700;
   
-  /* Accent Colors */
+  /* Accent Colors - Enhanced for better readability */
   --wave-crest: #00CED1;
-  --deep-current: #2F4F4F;
+  --deep-current: #1A365D;
   --shore-mist: #F0F8FF;
   
-  /* Theme Variables */
-  --background: linear-gradient(135deg, var(--shore-mist) 0%, var(--wave-foam) 50%, var(--ocean-light) 100%);
+  /* Text Colors for better contrast */
+  --text-primary: #1A365D;
+  --text-secondary: #2D5A87;
+  --text-muted: #4A6B8A;
+  
+  /* Dynamic Theme Variables */
+  --background: radial-gradient(ellipse at top, var(--shore-mist) 0%, var(--wave-foam) 30%, var(--ocean-light) 70%, var(--ocean-deep) 100%);
   --foreground: var(--deep-current);
-  --card-bg: rgba(255, 255, 255, 0.9);
+  --card-bg: rgba(255, 255, 255, 0.85);
   --border-color: var(--wave-foam);
   --accent-primary: var(--ocean-medium);
   --accent-secondary: var(--sunset-orange);
@@ -52,14 +57,22 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: var(--font-inter), 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.6;
   min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* Tidal Wave Animation Effects */
-@keyframes wave-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.05); opacity: 1; }
+/* Flowing Wave Animation Effects */
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
 }
 
 @keyframes ocean-flow {
@@ -68,8 +81,38 @@ body {
   100% { background-position: 0% 50%; }
 }
 
+@keyframes wave-movement {
+  0% { transform: translateX(-100%) rotate(0deg); }
+  100% { transform: translateX(100vw) rotate(360deg); }
+}
+
+@keyframes gentle-hover {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Wave Animation Classes */
 .wave-animation {
-  animation: wave-pulse 3s ease-in-out infinite;
+  animation: subtle-pulse 4s ease-in-out infinite;
+}
+
+.gentle-element {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gentle-element:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(30, 107, 140, 0.2);
 }
 
 .ocean-gradient {
@@ -82,6 +125,52 @@ body {
   background: linear-gradient(-45deg, var(--sunset-orange), var(--sunset-coral), var(--sunset-peach), var(--sunset-gold));
   background-size: 400% 400%;
   animation: ocean-flow 6s ease infinite;
+}
+
+/* Static Texture Effects */
+.texture-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.texture-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 20%, var(--wave-foam) 1px, transparent 1px),
+    radial-gradient(circle at 80% 80%, var(--ocean-light) 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Ripple Effect */
+.ripple-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-effect::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(135, 206, 235, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.ripple-effect:hover::before {
+  width: 300px;
+  height: 300px;
 }
 
 /* Custom scrollbar with wave theme */
@@ -100,4 +189,186 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--ocean-medium);
+}
+
+/* Curved Sections and Organic Shapes */
+.wave-section {
+  position: relative;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 50px 50px 20px 20px;
+  margin: 2rem 0;
+  overflow: hidden;
+}
+
+.wave-section::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(135deg, var(--wave-foam) 0%, transparent 70%);
+  clip-path: ellipse(100% 100% at 50% 0%);
+  z-index: -1;
+}
+
+.organic-card {
+  border-radius: 30px 10px 30px 10px;
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  border: 2px solid var(--wave-foam);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.organic-card::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--ocean-light), var(--wave-crest), var(--sunset-coral));
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.organic-card:hover::after {
+  opacity: 0.3;
+}
+
+/* Smooth Scrolling Wave Effect */
+.smooth-scroll {
+  scroll-behavior: smooth;
+}
+
+.wave-divider {
+  width: 100%;
+  height: 60px;
+  background: linear-gradient(135deg, var(--ocean-light) 0%, var(--wave-foam) 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
+  margin: 2rem 0;
+}
+
+/* Day to Night Transition */
+.day-night-transition {
+  background: linear-gradient(180deg, 
+    var(--shore-mist) 0%, 
+    var(--wave-foam) 25%, 
+    var(--ocean-light) 50%, 
+    var(--ocean-medium) 75%, 
+    var(--ocean-deep) 100%);
+  min-height: 100vh;
+  transition: all 2s ease;
+}
+
+/* Geometric Wave Patterns - Static */
+.geometric-waves {
+  background-image: 
+    radial-gradient(circle at 25% 25%, var(--wave-foam) 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, var(--ocean-light) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px;
+}
+
+/* Static wave pattern - no animation */
+.static-wave-pattern {
+  background-position: 0 0, 25px 25px;
+}
+
+/* Enhanced Button Styles */
+.wave-button {
+  background: linear-gradient(135deg, var(--ocean-medium), var(--wave-crest));
+  border: none;
+  border-radius: 25px;
+  color: white;
+  padding: 12px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.wave-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.wave-button:hover::before {
+  left: 100%;
+}
+
+.wave-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(30, 107, 140, 0.3);
+}
+
+/* Enhanced Typography for Better Readability */
+.text-enhanced {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.text-heading {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.text-subheading {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-secondary);
+}
+
+.text-body {
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.text-muted-enhanced {
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.text-accent {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--sunset-gold);
+  text-shadow: 0 1px 3px rgba(255, 215, 0, 0.3);
+}
+
+/* Improved contrast for better readability */
+.high-contrast {
+  color: var(--text-primary) !important;
+  font-weight: 600;
+}
+
+.medium-contrast {
+  color: var(--text-secondary) !important;
+  font-weight: 500;
+}
+
+/* Enhanced button text */
+.button-text {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: none;
 }
