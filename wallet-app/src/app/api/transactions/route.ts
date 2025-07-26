@@ -8,7 +8,7 @@ import { eq, and, gte, lt, desc } from 'drizzle-orm';
 // Validation schema
 const createTransactionSchema = z.object({
   amount: z.number().positive('Amount must be positive'),
-  type: z.enum(['income', 'expense'], { required_error: 'Type must be income or expense' }),
+  type: z.enum(['income', 'expense'], { message: 'Type must be income or expense' }),
   description: z.string().optional(),
   accountId: z.string().min(1, 'Account ID is required'),
   categoryId: z.string().min(1, 'Category ID is required'),
